@@ -17,7 +17,7 @@ const SET_OPTIONS_NOTIFLIX = {
   cssAnimationStyle: "zoom",
 };
 
-function CLEANER() {
+function cleanMarckup() {
   countryList.innerHTML = '';
   countryInfo.innerHTML = '';
 };
@@ -39,7 +39,7 @@ function onInputChange() {
   
   if (inputValue === "" || inputValue === ' ') {
     Notiflix.Notify.info("You didn't enter anything", SET_OPTIONS_NOTIFLIX);
-    CLEANER()
+    cleanMarckup()
     return
   }
 
@@ -76,6 +76,7 @@ function onInputChange() {
         }
         
       }).catch(error => {
+        cleanMarckup()
         // console.log(error);
         Notiflix.Notify.failure(OOPS_MASSAGE, SET_OPTIONS_NOTIFLIX);
         });
@@ -86,7 +87,7 @@ function onInputChange() {
 
 
 function renderUlCountryList(arr) {
-  CLEANER()
+  cleanMarckup()
   let marckup = '';
 
   for (let country of arr) {
@@ -110,7 +111,7 @@ function renderUlCountryList(arr) {
 }
 
 function renderToDivCountryInfo(arr) {
-  CLEANER()
+  cleanMarckup()
   let marckup = '';
 
   for (let {name,capital,population,flags,languages} of arr) {
