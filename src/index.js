@@ -17,10 +17,14 @@ const SET_OPTIONS_NOTIFLIX = {
   cssAnimationStyle: "zoom",
 };
 
-function cleanMarckup() {
+function cleanCountryList() {
   countryList.innerHTML = '';
-  countryInfo.innerHTML = '';
+  
 };
+
+function cleanCountryInfo() {
+  countryInfo.innerHTML = '';
+}
 
 const refs = {
   input: document.querySelector("input#search-box"),
@@ -37,9 +41,12 @@ function onInputChange() {
 
   let inputValue = input.value.toLowerCase().trim();
   
-  if (inputValue === "" || inputValue === ' ') {
+  if (!inputValue) {
     Notiflix.Notify.info("You didn't enter anything", SET_OPTIONS_NOTIFLIX);
-    cleanMarckup()
+    
+    cleanCountryList();
+    cleanCountryInfo();
+    
     return
   }
 
@@ -47,7 +54,7 @@ function onInputChange() {
     
     fetchCountries(inputValue)
      .then((response) => {
-        if (!response.ok) {
+       if (!response.ok || response.status === 404) {
           throw new Error(response.status);
         }
        
@@ -64,55 +71,47 @@ function onInputChange() {
         if (countOfCountries >= 2 && countOfCountries <= 10) {
           Notiflix.Notify.success("Successful request to the server", SET_OPTIONS_NOTIFLIX);
           
+          cleanCountryInfo();
           renderUlCountryList(data);
         }
         
         if (countOfCountries === 1) {
            Notiflix.Notify.success("Successful request to the server", SET_OPTIONS_NOTIFLIX);
-  
+          
+          cleanCountryList();
           renderToDivCountryInfo(data);
         }
       })
       .catch(error => {
         Notiflix.Notify.failure(OOPS_MASSAGE, SET_OPTIONS_NOTIFLIX);
-        cleanMarckup()
+       
+        cleanCountryList();
+        cleanCountryInfo();
         });
   }
  
 }
 
 
-
 function renderUlCountryList(arr) {
-  cleanMarckup()
-  let marckup = '';
-
-  for (let country of arr) {
-    marckup +=
-      `
+  countryList.innerHTML = arr.map(({ flags, name }) =>
+    `
       <li class="item"><img
-      src="${country.flags.svg}"
-      alt="${country.name.official}"
+      src="${flags.svg}"
+      alt="${name.official}"
       width="60"
       height="40"
       class="country-flag">
-      <p class="item-info">${country.name.official}</p>
+      <p class="item-info">${name.official}</p>
       </li>
       `
-    
-  }
-  
-  countryList.innerHTML = marckup;
-  console.log("Результат работы функции renderUlCountryList()");
+  ).join('');
 }
 
 function renderToDivCountryInfo(arr) {
-  cleanMarckup()
-  let marckup = '';
-
-  for (let {name,capital,population,flags,languages} of arr) {
-    marckup +=
-    `
+  
+  countryInfo.innerHTML = arr.map(({flags, name, capital, population, languages}) =>
+  `
       <img src="${flags.svg}" alt="${name.official}" width="60" height="40" class="country-flag">
       <h1 class="country-name">${name.official}</h1>
       <p class="info-item">
@@ -122,10 +121,8 @@ function renderToDivCountryInfo(arr) {
       <span class="accent">Population:</span>${population} humans
       </p>
       <p class="info-item">
-      <span class="accent">Languages:</span>${Object.values(languages)}
+      <span class="accent">Languages:</span>${Object.values(languages).join(", ")}
       </p>
     `
-  }
-  countryInfo.innerHTML = marckup;
-  console.log("Результат работы функции renderToDivCountryInfo()");
+  ).join("")
 }
