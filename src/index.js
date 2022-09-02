@@ -3,9 +3,20 @@ import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 import { fetchCountries } from './fetchCountries'
 
-const DEBOUNCE_DELAY = 800;
+const DEBOUNCE_DELAY = 300;
 const TOOMANY_MASSAGE = "Too many matches found. Please enter a more specific name.";
 const OOPS_MASSAGE = "Oops, there is no country with that name";
+const SET_OPTIONS_NOTIFLIX = {
+  width: "430px",
+  fontSize: "25px",
+  timeout: "3000",
+  distance:"20px",
+  cssAnimationDuration:"500",
+  borderRadius: "20px",
+  fontAwesomeIconStyle: "shadow",
+  cssAnimationStyle: "zoom",
+};
+
 function CLEANER() {
   countryList.innerHTML = '';
   countryInfo.innerHTML = '';
@@ -27,8 +38,7 @@ function onInputChange() {
   let inputValue = input.value.toLowerCase().trim();
   
   if (inputValue === "" || inputValue === ' ') {
-    console.log('в инпуте пустая строка, запускаю очистку');
-    Notiflix.Notify.info('Вы ничего не ввели. Введите в поиск страну');
+    Notiflix.Notify.info("You didn't enter anything", SET_OPTIONS_NOTIFLIX);
     CLEANER()
     return
   }
@@ -47,18 +57,18 @@ function onInputChange() {
         let countOfCountries = data.length;
 
         if(countOfCountries > 10) {
-          Notiflix.Notify.info(TOOMANY_MASSAGE);
+          Notiflix.Notify.info(TOOMANY_MASSAGE, SET_OPTIONS_NOTIFLIX);
           return
         }
         
         if (countOfCountries >= 2 && countOfCountries <= 10) {
-          console.log(data)
+          Notiflix.Notify.success("Successful request to the server", SET_OPTIONS_NOTIFLIX);
           renderUlCountryList(data);
 
         }
         
         if (countOfCountries === 1) {
-          
+            Notiflix.Notify.success("Successful request to the server", SET_OPTIONS_NOTIFLIX);
             console.log(data)
             
           renderToDivCountryInfo(data);
@@ -67,7 +77,7 @@ function onInputChange() {
         
       }).catch(error => {
         // console.log(error);
-        Notiflix.Notify.failure(OOPS_MASSAGE);
+        Notiflix.Notify.failure(OOPS_MASSAGE, SET_OPTIONS_NOTIFLIX);
         });
   }
  
@@ -106,8 +116,7 @@ function renderToDivCountryInfo(arr) {
   for (let {name,capital,population,flags,languages} of arr) {
     marckup +=
     `
-     <div class="wrap">
-      <img src="${flags.svg}" alt="${name.official}" width="60" height="60" class="country-flag">
+      <img src="${flags.svg}" alt="${name.official}" width="60" height="40" class="country-flag">
       <h1 class="country-name">${name.official}</h1>
       <p class="info-item">
       <span class="accent">Capital:</span>${capital}
@@ -118,7 +127,6 @@ function renderToDivCountryInfo(arr) {
       <p class="info-item">
       <span class="accent">Languages:</span>${Object.values(languages)}
       </p>
-    </div>
     `
   }
   // console.log(marckup);
@@ -126,30 +134,3 @@ function renderToDivCountryInfo(arr) {
 
   console.log("Результат работы функции renderToDivCountryInfo()");
 }
-
-
-
-
-// name.official - полное имя страны
-// capital - столица
-// population - население
-// flags.svg - ссылка на изображение флага
-// languages - массив языков
-
-// ********************************
-// e.g. Only message
-// Notiflix.Notify.success('Sol lucet omnibus');
-
-// Notiflix.Notify.failure('Qui timide rogat docet negare');
-
-// Notiflix.Notify.warning('Memento te hominem esse');
-
-// Notiflix.Notify.info('Cogito ergo sum');
-
-// // e.g. Message with a callback
-// Notiflix.Notify.success(
-//   'Click Me',
-//   function cb() {
-//     // callback
-//   },
-// );

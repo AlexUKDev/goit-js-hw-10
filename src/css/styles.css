@@ -32,7 +32,7 @@ ul {
 }
 .item {
   display:block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .item-info{
   display: inline-block;
@@ -42,7 +42,7 @@ ul {
   font-weight: 400;
   vertical-align: middle;
 }
-.wrap{
+.country-info{
   margin-left: 20px;
 }
 .country-flag, .country-name {
@@ -56,7 +56,7 @@ ul {
 }
 .info-item{
   display: block;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 400;
 }
 .accent{
