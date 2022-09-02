@@ -15,6 +15,51 @@ body {
 #search-box {
   font: inherit;
   padding: 8px;
+  min-width: 30%;
   max-width: 320px;
   margin-bottom: 16px;
+
+  box-sizing: border-box;
+  font-size: 40px;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+
+ul {
+  list-style-type: none;
+  margin-left: 20px;
+  padding: 0;
+}
+.item {
+  display:block;
+  margin-bottom: 8px;
+}
+.item-info{
+  display: inline-block;
+  box-sizing:border-box;
+  margin: 0px 0px 0px 20px;
+  font-size: 25px;
+  font-weight: 400;
+  vertical-align: middle;
+}
+.wrap{
+  margin-left: 20px;
+}
+.country-flag, .country-name {
+  display: inline-block;
+  vertical-align: middle;
+}
+.country-name{
+  margin: 0;
+  font-size: 45px;
+  margin-left: 5px;
+}
+.info-item{
+  display: block;
+  font-size: 20px;
+  font-weight: 400;
+}
+.accent{
+  font-weight: 700;
+  margin-right: 8px;
 }
