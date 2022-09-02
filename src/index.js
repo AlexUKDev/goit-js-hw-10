@@ -119,7 +119,7 @@ function renderToDivCountryInfo(arr) {
       <span class="accent">Capital:</span>${capital}
       </p>
       <p class="info-item">
-      <span class="accent">Population:</span>${population}
+      <span class="accent">Population:</span>${population} humans
       </p>
       <p class="info-item">
       <span class="accent">Languages:</span>${Object.values(languages)}
