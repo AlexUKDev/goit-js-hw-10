@@ -63,22 +63,19 @@ function onInputChange() {
         
         if (countOfCountries >= 2 && countOfCountries <= 10) {
           Notiflix.Notify.success("Successful request to the server", SET_OPTIONS_NOTIFLIX);
+          
           renderUlCountryList(data);
-
         }
         
         if (countOfCountries === 1) {
-            Notiflix.Notify.success("Successful request to the server", SET_OPTIONS_NOTIFLIX);
-            console.log(data)
-            
+           Notiflix.Notify.success("Successful request to the server", SET_OPTIONS_NOTIFLIX);
+  
           renderToDivCountryInfo(data);
-          
         }
-        
-      }).catch(error => {
-        cleanMarckup()
-        // console.log(error);
+      })
+      .catch(error => {
         Notiflix.Notify.failure(OOPS_MASSAGE, SET_OPTIONS_NOTIFLIX);
+        cleanMarckup()
         });
   }
  
@@ -104,10 +101,9 @@ function renderUlCountryList(arr) {
       `
     
   }
-  // console.log(marckup);
+  
   countryList.innerHTML = marckup;
   console.log("Результат работы функции renderUlCountryList()");
-
 }
 
 function renderToDivCountryInfo(arr) {
@@ -130,8 +126,6 @@ function renderToDivCountryInfo(arr) {
       </p>
     `
   }
-  // console.log(marckup);
   countryInfo.innerHTML = marckup;
-
   console.log("Результат работы функции renderToDivCountryInfo()");
 }
